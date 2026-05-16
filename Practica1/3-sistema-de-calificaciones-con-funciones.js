@@ -1,41 +1,42 @@
-const estudiantes = [
-  { nombre: "Ana", notas: [80, 90, 75] },
-  { nombre: "Luis", notas: [50, 60, 58] },
-  { nombre: "Carla", notas: [95, 92, 98] },
-  { nombre: "Pedro", notas: [40, 45, 50] }
+const students = [
+  { name: "Ana", grades: [80, 90, 75] },
+  { name: "Luis", grades: [50, 60, 58] },
+  { name: "Carla", grades: [95, 92, 98] },
+  { name: "Pedro", grades: [40, 45, 50] }
 ];
 
-function calcularPromedio(notas) {
-  let suma=0;
+function calculateAverage(grades) {
+  let sum = 0;
 
-  for (let i=0; i< notas.length; i++) {
-    suma += notas[i];
+  for (let i = 0; i < grades.length; i++) {
+    sum += grades[i];
   }
 
-  return suma / notas.length;
+  return sum / grades.length;
 }
 
-function obtenerEstado(promedio) {
-  if (promedio>= 60) {
-    return "Aprobado";
+function getStatus(average) {
+  if (average >= 60) {
+    return "Passed";
   } else {
-    return "Reprobado";
+    return "Failed";
   }
 }
 
-function generarReporte(estudiantes) {
-  let reporte = [];
+function generateReport(students) {
+  let report = [];
 
-  for (let i=0; i < estudiantes.length;i++) {
-  let promedio=calcularPromedio(estudiantes[i].notas);
+  for (let i = 0; i < students.length; i++) {
+    let average = calculateAverage(students[i].grades);
 
-    reporte.push({
-      nombre: estudiantes[i].nombre,
-      promedio: Number(promedio.toFixed(2)),
-      estado: obtenerEstado(promedio)
+    report.push({
+      name: students[i].name,
+      average: Number(average.toFixed(2)),
+      status: getStatus(average)
     });
   }
-  return reporte;
+
+  return report;
 }
 
-console.log(generarReporte(estudiantes));
+console.log(generateReport(students));
