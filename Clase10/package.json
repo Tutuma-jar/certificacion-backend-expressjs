@@ -1,0 +1,25 @@
+{
+  "name": "certificacion-backend-expressjs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tutuma-jar/certificacion-backend-expressjs.git"
+  },
+  "keywords": [],
+  "author": "Pablo Ramirez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tutuma-jar/certificacion-backend-expressjs/issues"
+  },
+  "homepage": "https://github.com/Tutuma-jar/certificacion-backend-expressjs#readme",
+  "dependencies": {
+    "random-item": "^4.0.1"
+  }
+}
