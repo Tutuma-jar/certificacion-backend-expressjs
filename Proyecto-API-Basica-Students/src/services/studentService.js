@@ -19,3 +19,7 @@ export function createStudent(student){
 export function getStudentByPosition(pos){
     return studentList[pos] ?? null;
 }
+
+export function getStudentById(id){
+    return studentList.find((student) => student.id === id) ?? null;
+}
