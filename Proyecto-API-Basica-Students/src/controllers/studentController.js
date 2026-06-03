@@ -6,21 +6,41 @@ import {
 } from "../services/studentService.js";
 
 export function findStudents(req, res, next) {
-  const { pass } = req.query;
+  const { pass, site } = req.query;
 
-  if (pass === undefined) {
-    return res.success(200,"Get all students",getAllStudents());
+  if (pass === undefined && site === undefined) {
+    return res.success(200, "Get all students", getAllStudents());
   }
 
-  if (pass !== "true" && pass !== "false") {
-    const error = Error("Query parameter 'pass' must be 'true' or 'false'");
-    error.statusCode = 400;
-    return next(error);
+  let students = getAllStudents();
+
+  if (pass !== undefined) {
+    if (pass !== "true" && pass !== "false") {
+      const error = Error("Query parameter 'pass' must be 'true' or 'false'");
+      error.statusCode = 400;
+      return next(error);
+    }
+
+    const passAsBoolean = pass === "true";
+    students = getStudentsByPassStatus(passAsBoolean);
   }
 
-  const passAsBoolean = pass === "true";
+  if (site !== undefined) {
+    if (site !== "LP" && site !== "CB") {
+      const error = Error("Query parameter 'site' must be 'LP' or 'CB'");
+      error.statusCode = 400;
+      return next(error);
+    }
 
-  return res.success(200,`Get students that has pass equals to ${passAsBoolean}`,getStudentsByPassStatus(passAsBoolean));
+    students = students.filter((student) => student.site === site);
+  }
+
+  const filters = [];
+  if (pass !== undefined) filters.push(`pass=${pass}`);
+  if (site !== undefined) filters.push(`site=${site}`);
+  const message = filters.length ? `Get students filtered by ${filters.join(", ")}` : "Get students";
+
+  return res.success(200, message, students);
 }
 
 export function saveStudent(req, res, next) {
