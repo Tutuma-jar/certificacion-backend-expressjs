@@ -35,6 +35,9 @@ export function findStudents(req, res, next) {
     students = students.filter((student) => student.site === site);
   }
 
+  // Only return active students
+  students = students.filter((student) => student.active === 1);
+
   const filters = [];
   if (pass !== undefined) filters.push(`pass=${pass}`);
   if (site !== undefined) filters.push(`site=${site}`);
