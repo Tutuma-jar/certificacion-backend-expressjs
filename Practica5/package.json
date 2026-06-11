@@ -1,0 +1,16 @@
+{
+  "name": "practica5-courses",
+  "version": "1.0.0",
+  "description": "API de cursos para la práctica 5",
+  "main": "src/app.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch src/app.js",
+    "start": "node src/app.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "mongoose": "^9.6.3"
+  }
+}
