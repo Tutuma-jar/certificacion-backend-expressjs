@@ -1,0 +1,234 @@
+openapi: 3.0.3
+
+info:
+  title: Students API
+  version: 1.0.0
+  description: API para gestionar estudiantes usando Express.js
+
+servers:
+  - url: http://localhost:3000
+    description: Servidor local
+
+paths:
+  /api/students:
+    get:
+      summary: Obtener todos los estudiantes
+      tags:
+        - Students
+      responses:
+        "200":
+          description: Lista de estudiantes obtenida correctamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StudentListResponse"
+
+    post:
+      summary: Crear un estudiante
+      tags:
+        - Students
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateStudentInput"
+      responses:
+        "201":
+          description: Estudiante creado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StudentResponse"
+        "400":
+          description: Datos inválidos
+
+    put:
+      summary: Reemplazar la colección de estudiantes
+      tags:
+        - Students
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/CreateStudentInput"
+      responses:
+        "200":
+          description: Colección de estudiantes reemplazada correctamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StudentListResponse"
+        "400":
+          description: Datos inválidos
+        "401":
+          description: No autorizado
+
+  /api/students/{id}:
+    get:
+      summary: Obtener un estudiante por ID
+      tags:
+        - Students
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del estudiante
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Estudiante encontrado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StudentResponse"
+        "404":
+          description: Estudiante no encontrado
+
+    patch:
+      summary: Actualizar parcialmente un estudiante
+      tags:
+        - Students
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del estudiante
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateStudentInput"
+      responses:
+        "200":
+          description: Estudiante actualizado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StudentResponse"
+        "400":
+          description: Datos inválidos
+        "404":
+          description: Estudiante no encontrado
+
+    delete:
+      summary: Eliminar un estudiante
+      tags:
+        - Students
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del estudiante
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Estudiante eliminado correctamente
+        "404":
+          description: Estudiante no encontrado
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    Student:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "6848d89a5f3e8c4a12345678"
+        name:
+          type: string
+          example: "Ana"
+        grade:
+          type: number
+          example: 95
+        site:
+          type: string
+          example: "LP"
+        active:
+          type: boolean
+          example: true
+
+    CreateStudentInput:
+      type: object
+      required:
+        - name
+        - grade
+        - site
+      properties:
+        name:
+          type: string
+          minLength: 2
+          example: "Ana"
+        grade:
+          type: number
+          minimum: 0
+          maximum: 100
+          example: 95
+        site:
+          type: string
+          example: "LP"
+        active:
+          type: boolean
+          example: true
+
+    UpdateStudentInput:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 2
+          example: "Ana María"
+        grade:
+          type: number
+          minimum: 0
+          maximum: 100
+          example: 88
+        site:
+          type: string
+          example: "CB"
+        active:
+          type: boolean
+          example: false
+
+    StudentResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: "Student retrieved successfully"
+        data:
+          $ref: "#/components/schemas/Student"
+
+    StudentListResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: "List of students retrieved successfully"
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Student"

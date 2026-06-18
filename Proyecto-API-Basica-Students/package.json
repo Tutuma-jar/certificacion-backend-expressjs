@@ -1,0 +1,28 @@
+{
+  "name": "clase15-refactorizacion",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node --watch src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "express-openapi-validator": "^5.6.2",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.6.3",
+    "swagger-ui-express": "^5.0.1",
+    "yamljs": "^0.3.0"
+  },
+  "devDependencies": {
+    "supertest": "^7.2.2",
+    "vitest": "^4.1.8"
+  }
+}
